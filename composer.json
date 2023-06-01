@@ -1,0 +1,17 @@
+{
+    "name": "White-App/shopFinder",
+    "description": "Shopfinder module for Magento 2",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "require": {
+        "php": "~7.4.0||~8.0.0",
+        "magento/framework": "*"
+    },
+    "autoload": {
+        "files": [
+        ],
+        "psr-4": {
+            "WhiteApp\\Shopfinder\\": ""
+        }
+    }
+}
