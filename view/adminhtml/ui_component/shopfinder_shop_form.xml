@@ -1,0 +1,62 @@
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="general">
+        <field name="name" formElement="input">
+            <settings>
+                <label translate="true">Shop Name</label>
+                <dataType>text</dataType>
+                <required>true</required>
+            </settings>
+        </field>
+        <field name="identifier" formElement="input">
+            <settings>
+                <label translate="true">Identifier</label>
+                <dataType>text</dataType>
+                <required>true</required>
+            </settings>
+        </field>
+        <field name="country" formElement="select">
+            <settings>
+                <label translate="true">Country</label>
+                <dataType>text</dataType>
+                <required>true</required>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="WhiteApp\Shopfinder\Model\Source\CountryOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="image" formElement="imageUploader">
+            <settings>
+                <label translate="true">Image</label>
+                <componentType>imageUploader</componentType>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>2097152</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="string" name="url">shopfinder/shop/imageupload</param>
+                        </uploaderConfig>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+        <field name="longitude" formElement="input">
+            <settings>
+                <label translate="true">Longitude</label>
+                <dataType>text</dataType>
+            </settings>
+        </field>
+        <field name="latitude" formElement="input">
+            <settings>
+                <label translate="true">Latitude</label>
+                <dataType>text</dataType>
+            </settings>
+        </field>
+    </fieldset>
+</form>

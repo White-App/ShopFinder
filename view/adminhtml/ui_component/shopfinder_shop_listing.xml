@@ -1,0 +1,55 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <filters name="listing_filters" />
+    </listingToolbar>
+    <columns name="shop_columns">
+        <column name="id" sortOrder="10">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+            </settings>
+        </column>
+        <column name="image" sortOrder="20">
+            <settings>
+                <label translate="true">Image</label>
+            </settings>
+        </column>
+        <column name="name" sortOrder="30">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shop Name</label>
+            </settings>
+        </column>
+        <column name="identifier" sortOrder="40">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Identifier</label>
+            </settings>
+        </column>
+        <column name="country" sortOrder="50">
+            <settings>
+                <filter>select</filter>
+                <options class="WhiteApp\Shopfinder\Model\Source\CountryOptions" />
+                <label translate="true">Country</label>
+            </settings>
+        </column>
+        <column name="created" sortOrder="60">
+            <settings>
+                <filter>dateRange</filter>
+                <label translate="true">Created</label>
+            </settings>
+        </column>
+        <column name="modified" sortOrder="70">
+            <settings>
+                <filter>dateRange</filter>
+                <label translate="true">Modified</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="WhiteApp\Shopfinder\Ui\Component\Listing\Column\Actions">
+            <settings>
+                <indexField>shop_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

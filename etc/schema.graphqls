@@ -1,0 +1,20 @@
+type Shop {
+  shop_id: Int!
+  name: String!
+  identifier: String!
+  country: String!
+  image: String!
+  longitude: String
+  latitude: String
+}
+
+type Mutation {
+  updateShop(shop_id: Int!, name: String, country: String, image: String, longitude: String, latitude: String): Shop!
+  deleteShop(shop_id: Int!): Boolean!
+}
+
+type Query {
+  getShops: [Shop!]!
+  getShopByIdentifier(identifier: String!): Shop
+  getNearbyShops(latitude: Float!, longitude: Float!, radius: Int!): [Shop!]!
+}

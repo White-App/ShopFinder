@@ -1,17 +1,32 @@
 {
-    "name": "White-App/shopFinder",
-    "description": "Shopfinder module for Magento 2",
+    "name": "mynamespace/module-shopfinder",
+    "description": "Magento 2 Shopfinder module",
+    "require": {
+        "php": "~7.3||~7.4",
+        "magento/product-community-edition": "2.4.3",
+        "phpunit/phpunit": "^9.0"
+    },
+    "suggest": {
+        "magento/module-cms": "*",
+        "magento/module-catalog": "*"
+    },
     "type": "magento2-module",
     "version": "1.0.0",
-    "require": {
-        "php": "~7.4.0||~8.0.0",
-        "magento/framework": "*"
-    },
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
     "autoload": {
         "files": [
+            "registration.php"
         ],
         "psr-4": {
             "WhiteApp\\Shopfinder\\": ""
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WhiteApp\\Shopfinder\\Test\\Unit\\": "Test/Unit/"
         }
     }
 }
