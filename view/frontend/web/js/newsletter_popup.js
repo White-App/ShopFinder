@@ -1,8 +1,3 @@
-/**
- * @author Nir Goldman
- * @package Gold_NewsletterPopup
- */
-
 window.onload = function(e){
     checkCookie();
   };
