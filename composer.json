@@ -1,17 +1,22 @@
 {
-    "name": "mynamespace/module-shopfinder",
-    "description": "Magento 2 Shopfinder module",
+    "name": "whiteapp/shopfinder",
+    "description": "My amazing and complete shopfinder !",
     "require": {
-        "php": "~7.3||~7.4",
-        "magento/product-community-edition": "2.4.3",
-        "phpunit/phpunit": "^9.0"
-    },
-    "suggest": {
-        "magento/module-cms": "*",
-        "magento/module-catalog": "*"
+      "php": "~7.4",
+      "magento/module-store": "0.74.0-beta4",
+      "magento/module-theme": "0.74.0-beta4",
+      "magento/module-widget": "0.74.0-beta4",
+      "magento/module-backend": "0.74.0-beta4",
+      "magento/module-catalog": "0.74.0-beta4",
+      "magento/module-email": "0.74.0-beta4",
+      "magento/module-ui": "0.74.0-beta4",
+      "magento/module-variable": "0.74.0-beta4",
+      "magento/module-media-storage": "0.74.0-beta4",
+      "magento/framework": "0.74.0-beta4",
+      "magento/magento-composer-installer": "*"
     },
     "type": "magento2-module",
-    "version": "1.0.0",
+    "version": "0.74.0",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
@@ -21,12 +26,15 @@
             "registration.php"
         ],
         "psr-4": {
-            "WhiteApp\\Shopfinder\\": ""
+            "Vendor\\ModuleName\\": ""
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "WhiteApp\\Shopfinder\\Test\\Unit\\": "Test/Unit/"
-        }
+    "extra": {
+        "map": [
+            [
+                "*",
+                "Whiteapp/ShopFinder"
+            ]
+        ]
     }
 }

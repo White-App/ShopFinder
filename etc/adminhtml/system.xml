@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+    <system>
+        <tab id="xj_settings" translate="label" sortOrder="1000">
+            <label>Shopfinder</label>
+        </tab>
+        <section id="xj_settings" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
+           <label>Settings</label>
+           <tab>xj_settings</tab>
+            <resource>Whiteapp_ShopFinder::shopfinder_configuration</resource>
+             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Shopfinder Settings</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Module Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="apikey" type="password" sortOrder="19" showInDefault="2" showInWebsite="1" showInStore="1">
+                    <label>Google API Key</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="perPage" type="text" sortOrder="20" showInDefault="2" showInWebsite="1" showInStore="1">
+                    <label>Dispaly Stores Per Page</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
+
+
+

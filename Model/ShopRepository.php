@@ -6,39 +6,36 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use WhiteApp\Shopfinder\Api\ShopRepositoryInterface;
-use WhiteApp\Shopfinder\Model\ResourceModel\Shop as ShopResource;
+use WhiteApp\Shopfinder\Model\Resource\ShopFinder;
 
 class ShopRepository implements ShopRepositoryInterface
 {
-    protected $shopResource;
-    protected $shopFactory;
-    private $randomFactory;
+    protected ShopFinder $shopFinder;
+    protected ShopFinderFactory $shopFactory;
 
     public function __construct(
-        ShopResource $shopResource,
-        ShopFactory $shopFactory,
-        RandomFactory $randomFactory
+        ShopFinder $shopFinder,
+        ShopFinderFactory $shopFactory
     ) {
-        $this->shopResource = $shopResource;
+        $this->shopFinder = $shopFinder;
         $this->shopFactory = $shopFactory;
-        $this->randomFactory = $randomFactory;
     }
 
     public function getShops()
     {
         // Logic to fetch all shops
-        return $this->shopResource->getShops();
+        return $this->shopFinder->getShops();
     }
 
     public function getShopByIdentifier($identifier)
     {
         // Logic to fetch a shop by identifier
-        return $this->shopResource->getShopByIdentifier($identifier);
+        return $this->shopFinder->getShopByIdentifier($identifier);
     }
 
     public function updateShop($data)
     {
-        $shopId = $data['shop_id'];
+        $shopId = $data['shopfinder_id'];
         try {
             $shop = $this->shopFactory->create()->load($shopId);
             if (!$shop->getId()) {
@@ -46,13 +43,14 @@ class ShopRepository implements ShopRepositoryInterface
             }
 
             // Update shop data
-            $shop->setName($data['name']);
+            $shop->setTitle($data['title']);
+            $shop->setAddress($data['address']);
             $shop->setCountry($data['country']);
-            $shop->setImage($data['image']);
+            $shop->setIsActive($data['is_active']);
             $shop->setLongitude($data['longitude']);
             $shop->setLatitude($data['latitude']);
 
-            $this->shopResource->save($shop);
+            $this->shopFinder->save($shop);
             return $shop;
         } catch (\Exception $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
@@ -61,15 +59,24 @@ class ShopRepository implements ShopRepositoryInterface
 
     public function deleteShop($shopId)
     {
-        throw new CouldNotDeleteException(__('Deleting shops via the API is not allowed.'));
+        try {
+            // Assuming you have a shopRepository with a deleteById method.
+            $this->shopRepository->deleteById($shopId);
+            return ['success' => true, 'message' => 'Shop deleted successfully.'];
+        } catch (\Exception $e) {
+            // Log the exception and return a result to indicate failure.
+            $this->logger->error($e->getMessage());
+            return ['success' => false, 'message' => 'Failed to delete shop.'];
+        }
     }
+
 
     public function getNearbyShops($latitude, $longitude, $radius)
     {
         // Implement the logic to fetch shops near the given location within the specified radius
         // You can use the latitude, longitude, and radius to query the shops from your data source
 
-        $shops = $this->shopResource->getShops();
+        $shops = $this->shopFinder->getShops();
         $nearbyShops = [];
         foreach ($shops as $shop) {
             $distance = $this->calculateDistance($latitude, $longitude, $shop->getLatitude(), $shop->getLongitude());

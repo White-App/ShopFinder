@@ -1,117 +1,87 @@
 <?php
 
-namespace WhiteApp\Shopfinder\Setup;
-
+namespace Whiteapp\ShopFinder\Setup;
+/**
+ * @author Mustapha <bouarfamus@gmail.com>
+ */
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\DB\Ddl\Table;
-
+use Magento\Framework\DB\Adapter\AdapterInterface;
+/**
+ * @codeCoverageIgnore
+ */
 class InstallSchema implements InstallSchemaInterface
 {
-    private $menuFactory;
-
-    public function __construct(\Magento\Backend\Model\Menu\Factory $menuFactory)
-    {
-        $this->menuFactory = $menuFactory;
-    }
-
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     */
     public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $installer = $setup;
-        $installer->startSetup();
 
-        if (!$installer->tableExists('whiteapp_shopfinder')) {
+        $installer->startSetup();
+        if (!$installer->tableExists('shopfinder')) {
             $table = $installer->getConnection()->newTable(
-                $installer->getTable('whiteapp_shopfinder')
-            )
-                ->addColumn(
-                    'shop_id',
+                $installer->getTable('shopfinder')
+            )->addColumn(
+                    'shopfinder_id',
                     Table::TYPE_INTEGER,
                     null,
-                    [
-                        'identity' => true,
-                        'nullable' => false,
-                        'primary' => true,
-                        'unsigned' => true,
-                    ],
-                    'Shop ID'
-                )
-                ->addColumn(
-                    'name',
+                    ['identity' => true, 'nullable' => false, 'primary' => true],
+                    'shopfinder ID'
+                )->addColumn(
+                    'title',
                     Table::TYPE_TEXT,
                     255,
-                    ['nullable => false'],
-                    'Shop Name'
-                )
-                ->addColumn(
-                    'identifier',
+                    ['nullable' => false],
+                    'Title'
+                )->addColumn(
+                    'content',
+                    Table::TYPE_TEXT,
+                    '2M',
+                    ['nullable' => false],
+                    'Post'
+                )->addColumn(
+                    'address',
+                    Table::TYPE_TEXT,
+                    '2M',
+                    ['nullable' => false],
+                    'Address'
+                )->addColumn(
+                    'zoomlevel',
                     Table::TYPE_TEXT,
                     255,
-                    [],
-                    'Shop Identifier'
-                )
-                ->addColumn(
-                    'country',
-                    Table::TYPE_TEXT,
-                    255,
-                    [],
-                    'Shop Country'
-                )
-                ->addColumn(
-                    'image',
-                    Table::TYPE_TEXT,
-                    '64k',
-                    [],
-                    'Shop Image'
-                )
-                ->addColumn(
-                    'longitude',
-                    Table::TYPE_TEXT,
-                    255,
-                    ['nullable' => true],
-                    'Shop Longitude'
-                )
-                ->addColumn(
+                    ['nullable' => false , 'default' => '12'],
+                    'Zoom Level'
+                )->addColumn(
                     'latitude',
                     Table::TYPE_TEXT,
                     255,
-                    ['nullable' => true],
-                    'Shop Latitude'
+                    ['nullable' => false],
+                    'Latitude'
+                )->addColumn(
+                    'longitude',
+                    Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false],
+                    'Longitude'
                 )
-                ->setComment('Shopfinder Table');
+                ->addColumn(
+                    'is_active',
+                    Table::TYPE_SMALLINT,
+                    null,
+                    [],
+                    'Active Status'
+                )->setComment(
+                    'ShopFinder Table'
+                );
             $installer->getConnection()->createTable($table);
 
-            $installer->getConnection()->addIndex(
-                $installer->getTable('whiteapp_shopfinder'),
-                $setup->getIdxName(
-                    $installer->getTable('whiteapp_shopfinder'),
-                    ['name', 'identifier', 'country', 'image', 'longitude', 'latitude'],
-                    \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_FULLTEXT
-                ),
-                ['name', 'identifier', 'country', 'image', 'longitude', 'latitude'],
-                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_FULLTEXT
-            );
         }
-
-        // Create the menu
-        $this->addMenu();
-
         $installer->endSetup();
-    }
 
-    private function addMenu()
-    {
-        $menu = $this->menuFactory->create();
-        $menu->setData([
-            'parent_id' => 'Magento_Catalog::catalog',
-            'id' => 'WhiteApp_Shopfinder::shopfinder',
-            'title' => 'Shopfinder',
-            'module' => 'WhiteApp_Shopfinder',
-            'resource' => 'WhiteApp_Shopfinder::shopfinder',
-            'sort_order' => 30,
-            'action' => 'shopfinder/shop/index',
-        ]);
-        $menu->save();
     }
 }

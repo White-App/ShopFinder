@@ -1,37 +1,56 @@
 <?php
 
-namespace WhiteApp\Shopfinder\Setup;
+namespace Whiteapp\ShopFinder\Setup;
 
+use Magento\Framework\Setup\UpgradeSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\DB\Ddl\Table;
 
-class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
+class UpgradeSchema implements UpgradeSchemaInterface
 {
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
-        $installer = $setup;
+        $setup->startSetup();
 
-        $installer->startSetup();
-
-        if (version_compare($context->getVersion(), '1.0.1', '<')) {
-            // Perform schema changes for version 1.0.1
-            $this->addNewColumn($installer);
+        if (version_compare($context->getVersion(), '0.0.3') < 0) {
+            $setup->getConnection()->addColumn(
+                $setup->getTable('shopfinder'),
+                'image',
+                [
+                    'type' => Table::TYPE_TEXT,
+                    'length' => 532,
+                    'nullable' => false,
+                    'default' => '',
+                    'comment' => 'Upload Image'
+                ]
+            );
         }
 
-        $installer->endSetup();
-    }
+        if (version_compare($context->getVersion(), '0.0.4') < 0) {
+            $setup->getConnection()->addColumn(
+                $setup->getTable('shopfinder'),
+                'country',
+                [
+                    'type' => Table::TYPE_TEXT,
+                    'length' => 255,
+                    'nullable' => false,
+                    'comment' => 'Country'
+                ]
+            );
 
-    protected function addNewColumn($installer)
-    {
-        $installer->getConnection()->addColumn(
-            $installer->getTable('whiteapp_shopfinder_shop'),
-            'new_column',
-            [
-                'type' => Table::TYPE_TEXT,
-                'nullable' => true,
-                'comment' => 'New Column',
-            ]
-        );
+            $setup->getConnection()->addColumn(
+                $setup->getTable('shopfinder'),
+                'identifier',
+                [
+                    'type' => Table::TYPE_TEXT,
+                    'length' => 255,
+                    'nullable' => false,
+                    'comment' => 'Unique Identifier'
+                ]
+            );
+        }
+
+        $setup->endSetup();
     }
 }

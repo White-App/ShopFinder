@@ -1,0 +1,14 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+     <head>
+		<css src="Whiteapp_ShopFinder::css/shopFinder.css" />
+		<title>Shop Finder</title>
+	 </head>
+     <body>
+        <attribute name="class" value="shopfinder-list"/>
+        <referenceContainer name="content">
+            <block class="Whiteapp\ShopFinder\Block\ShopFinder" name="shopfinder" template="Whiteapp_ShopFinder::shopfinder.phtml" cacheable="false">
+            </block>
+        </referenceContainer>
+        <referenceContainer name="before.body.end" remove="true"  />
+    </body>
+</page>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Whiteapp_ShopFinder::whiteapp" title="WhiteApp" module="Whiteapp_ShopFinder" sortOrder="5" resource="Whiteapp_ShopFinder::shopfinder" dependsOnModule="Whiteapp_ShopFinder"/>
+
+        <add id="Whiteapp_ShopFinder::shopfinder" title="Shop Finder" module="Whiteapp_ShopFinder" sortOrder="1" parent="Whiteapp_ShopFinder::whiteapp" action="shopfinder/shopfinder" resource="Whiteapp_ShopFinder::shopfinder"/>
+
+        <add id="Whiteapp_ShopFinder::setting" title="Settings" module="Whiteapp_ShopFinder"  sortOrder="2" dependsOnModule="Whiteapp_ShopFinder" parent="Whiteapp_ShopFinder::whiteapp" action="adminhtml/system_config/edit/section/xj_settings" resource="Magento_Config::config"/>
+    </menu>
+</config>

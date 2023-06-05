@@ -26,7 +26,7 @@ class Shops implements ResolverInterface
             case 'updateShop':
                 return $this->updateShop($args);
             case 'deleteShop':
-                throw new LocalizedException(__('Deleting shops via the API is not allowed.'));
+                return ['success' => false, 'message' => 'Deleting shops via the API is not allowed.'];
             case 'getNearbyShops':
                 return $this->getNearbyShops($args['latitude'], $args['longitude'], $args['radius']);
         }
@@ -44,7 +44,9 @@ class Shops implements ResolverInterface
 
     private function getShops()
     {
-        return $this->shopRepository->getShops();
+        // If no shops are found, return an empty list.
+        $shops = $this->shopRepository->getShops();
+        return $shops ?? [];
     }
 
     private function getShopByIdentifier($identifier)
@@ -55,11 +57,6 @@ class Shops implements ResolverInterface
     private function updateShop($args)
     {
         return $this->shopRepository->updateShop($args);
-    }
-
-    private function deleteShop($shopId)
-    {
-        return $this->shopRepository->deleteShop($shopId);
     }
 
 }

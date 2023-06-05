@@ -1,20 +1,27 @@
 type Shop {
-  shop_id: Int!
-  name: String!
+  shopfinder_id: Int!
+  title: String!
   identifier: String!
+  address: String!
   country: String!
   image: String!
+  is_active: Boolean!
   longitude: String
   latitude: String
 }
 
-type Mutation {
-  updateShop(shop_id: Int!, name: String, country: String, image: String, longitude: String, latitude: String): Shop!
-  deleteShop(shop_id: Int!): Boolean!
+type DeleteShopResult {
+  success: Boolean!
+  message: String
 }
 
 type Query {
-  getShops: [Shop!]!
-  getShopByIdentifier(identifier: String!): Shop
-  getNearbyShops(latitude: Float!, longitude: Float!, radius: Int!): [Shop!]!
+  getShops: [Shop!]! @resolver(class: "Whiteapp\\ShopFinder\\Model\\Resolver\\Shops")
+  getShopByIdentifier(identifier: String!): Shop @resolver(class: "Whiteapp\\ShopFinder\\Model\\Resolver\\Shops")
+  getNearbyShops(latitude: Float!, longitude: Float!, radius: Int!): [Shop!]! @resolver(class: "Whiteapp\\ShopFinder\\Model\\Resolver\\Shops")
+}
+
+type Mutation {
+    updateShop(shopfinder_id: Int!, title: String, address: String, is_active: Boolean, country: String, longitude: String, latitude: String): Shop @resolver(class: "Whiteapp\\ShopFinder\\Model\\Resolver\\Shops")
+    deleteShop(shopfinder_id: Int!): DeleteShopResult @resolver(class: "Whiteapp\\ShopFinder\\Model\\Resolver\\Shops")
 }
