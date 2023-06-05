@@ -13,7 +13,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
     {
         $setup->startSetup();
 
-        if (version_compare($context->getVersion(), '0.0.3') < 0) {
+        if (version_compare($context->getVersion(), '1.0') < 0) {
             $setup->getConnection()->addColumn(
                 $setup->getTable('shopfinder'),
                 'image',
@@ -27,7 +27,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
             );
         }
 
-        if (version_compare($context->getVersion(), '0.0.4') < 0) {
+        if (version_compare($context->getVersion(), '1.0') < 0) {
             $setup->getConnection()->addColumn(
                 $setup->getTable('shopfinder'),
                 'country',
